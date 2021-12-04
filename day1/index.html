@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="image/x-icon" href="/favicon.ico" rel="shortcut icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/normalize.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>Pomodoro Timer</title>
+  </head>
+  <body>
+    <div class="timerContainer">
+      <div class="timerFilling">
+        <div class="time">
+          <input class="minutes" type="number" value="01" min="00"/>
+          <span>:</span>
+          <input class="seconds" type="number" value="05" min="00" max="59"/>
+        </div>
+        <button class="startStop">start</button>
+        <button class="settings gear"></button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
