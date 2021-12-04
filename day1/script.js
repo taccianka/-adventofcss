@@ -5,24 +5,47 @@ const seconds = document.querySelector('.seconds');
 const settings = document.querySelector('.settings');
 const timeValues = document.querySelectorAll('input[type="number"]');
 
+const animateBorder = document.querySelector('.timerContainer');
+
+/* TODO :
+//1. start/stop button work
+2. filling the circle of progress
+//3. set your own time
+4. alert
+// 5. music
+*/
 
 class Timer {
-  constructor() {
+  constructor(minutes, seconds, startButton) {
     this.minutes = minutes.value;
     this.seconds = seconds.value;
+    this.controlButton = startStopButton;
     this.state = Number(this.minutes) * 60 + Number(this.seconds);
     this.countDown = this.countDown.bind(this);
-    console.log('const', this.state);
   }
 
   startDown() {
     this.timerId = window.setInterval(this.countDown, 1000);
+    this.controlButton.innerHTML = 'stop';
+    timeValues.forEach(el => {
+      el.classList.remove('edit');
+    });
+    if (settings.classList.contains('check')) {
+      settings.classList.remove('check');
+      settings.classList.add('gear');
+      this.updateState(minutes.value, seconds.value);
+    }
+
   }
 
   countDown() {
     this.state--;
-    console.log('yes', this.state);
     this.update();
+  }
+
+  stop() {
+    window.clearTimeout(this.timerId);
+    startStopButton.innerHTML = 'start';
   }
 
   update() {
@@ -48,7 +71,6 @@ class Timer {
   updateState(minutes, seconds) {
     this.minutes = minutes;
     this.seconds = seconds;
-    // console.log('state = ', this.minutes, minu)
     this.state = Number(this.minutes) * 60 + Number(this.seconds);
   }
 
@@ -57,24 +79,39 @@ class Timer {
     return false;
   }
 
-  stop() {
-    window.clearTimeout(this.timerId);
-  }
-
-  resume() {
-    this.timerId = window.setInterval(this.countUp, 1000);
-  }
 }
 
-let myTimer = new Timer();
+let myTimer = new Timer(minutes, seconds, startStopButton);
 
 startStopButton.addEventListener('click', () => {
   if (startStopButton.innerHTML === 'start') {
-    console.log(myTimer);
     myTimer.startDown();
-    startStopButton.innerHTML = 'stop';
   } else {
     myTimer.stop();
-    startStopButton.innerHTML = 'start';
   }
 });
+
+settings.addEventListener('click', () => {
+  if (settings.classList.contains('gear')) {
+    myTimer.stop();
+    timeValues.forEach(el => {
+      el.classList.add('edit');
+    });
+    settings.classList.remove('gear');
+    settings.classList.add('check');
+  } else if (settings.classList.contains('check')) {
+    myTimer.startDown();
+    timeValues.forEach(el => {
+      el.classList.remove('edit');
+    });
+  }
+  myTimer.updateState(minutes.value, seconds.value);
+});
+
+timeValues.forEach( el => {
+  el.addEventListener('input', (event)=> {
+    if (parseInt(el.value) < 10) {
+      el.value = '0' + el.value;
+    }
+  });
+})
