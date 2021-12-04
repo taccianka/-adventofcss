@@ -67,3 +67,14 @@ class Timer {
 }
 
 let myTimer = new Timer();
+
+startStopButton.addEventListener('click', () => {
+  if (startStopButton.innerHTML === 'start') {
+    console.log(myTimer);
+    myTimer.startDown();
+    startStopButton.innerHTML = 'stop';
+  } else {
+    myTimer.stop();
+    startStopButton.innerHTML = 'start';
+  }
+});
