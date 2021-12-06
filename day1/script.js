@@ -4,16 +4,8 @@ const minutes = document.querySelector('.minutes');
 const seconds = document.querySelector('.seconds');
 const settings = document.querySelector('.settings');
 const timeValues = document.querySelectorAll('input[type="number"]');
-
+const progress = document.querySelector('.progress');
 const animateBorder = document.querySelector('.timerContainer');
-
-/* TODO :
-//1. start/stop button work
-2. filling the circle of progress
-//3. set your own time
-4. alert
-// 5. music
-*/
 
 class Timer {
   constructor(minutes, seconds, startButton) {
@@ -22,6 +14,7 @@ class Timer {
     this.controlButton = startStopButton;
     this.state = Number(this.minutes) * 60 + Number(this.seconds);
     this.countDown = this.countDown.bind(this);
+
   }
 
   startDown() {
@@ -34,6 +27,13 @@ class Timer {
       settings.classList.remove('check');
       settings.classList.add('gear');
       this.updateState(minutes.value, seconds.value);
+      progress.style.animation = `countdown ${this.state}s linear forwards`;
+    }
+    console.log(this.state);
+    if (progress.style.animationPlayState != 'paused') {
+      progress.style.animation = `countdown ${this.state}s linear forwards`;
+    } else {
+      progress.style.animationPlayState = 'running';
     }
 
   }
@@ -46,6 +46,7 @@ class Timer {
   stop() {
     window.clearTimeout(this.timerId);
     startStopButton.innerHTML = 'start';
+    progress.style.animationPlayState = 'paused';
   }
 
   update() {
@@ -99,6 +100,7 @@ settings.addEventListener('click', () => {
     });
     settings.classList.remove('gear');
     settings.classList.add('check');
+    progress.style.animation = 'none';
   } else if (settings.classList.contains('check')) {
     myTimer.startDown();
     timeValues.forEach(el => {
