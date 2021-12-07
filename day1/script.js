@@ -14,13 +14,12 @@ class Timer {
     this.controlButton = startStopButton;
     this.state = Number(this.minutes) * 60 + Number(this.seconds);
     this.countDown = this.countDown.bind(this);
-
   }
 
   startDown() {
     this.timerId = window.setInterval(this.countDown, 1000);
     this.controlButton.innerHTML = 'stop';
-    timeValues.forEach(el => {
+    timeValues.forEach((el) => {
       el.classList.remove('edit');
     });
     if (settings.classList.contains('check')) {
@@ -29,18 +28,21 @@ class Timer {
       this.updateState(minutes.value, seconds.value);
       progress.style.animation = `countdown ${this.state}s linear forwards`;
     }
-    console.log(this.state);
     if (progress.style.animationPlayState != 'paused') {
       progress.style.animation = `countdown ${this.state}s linear forwards`;
     } else {
       progress.style.animationPlayState = 'running';
     }
-
   }
 
   countDown() {
-    this.state--;
-    this.update();
+    if (this.state > 0) {
+      this.state--;
+      this.update();
+    } else {
+      alert('Please, set timer time and retry');
+      this.stop();
+    }
   }
 
   stop() {
@@ -64,8 +66,12 @@ class Timer {
     if (this.seconds >= 10) {
       seconds.value = this.seconds;
     } else {
-      if (this.seconds == 0 && this.minutes == 0) this.stop();
-      seconds.value = '0' + this.seconds;
+      if (this.seconds == 0 && this.minutes == 0) {
+        seconds.value = '00';
+        this.stop();
+      } else {
+        seconds.value = '0' + this.seconds;
+      }
     }
   }
 
@@ -79,7 +85,6 @@ class Timer {
     if (!this.timerId) return true;
     return false;
   }
-
 }
 
 let myTimer = new Timer(minutes, seconds, startStopButton);
@@ -95,7 +100,7 @@ startStopButton.addEventListener('click', () => {
 settings.addEventListener('click', () => {
   if (settings.classList.contains('gear')) {
     myTimer.stop();
-    timeValues.forEach(el => {
+    timeValues.forEach((el) => {
       el.classList.add('edit');
     });
     settings.classList.remove('gear');
@@ -103,17 +108,17 @@ settings.addEventListener('click', () => {
     progress.style.animation = 'none';
   } else if (settings.classList.contains('check')) {
     myTimer.startDown();
-    timeValues.forEach(el => {
+    timeValues.forEach((el) => {
       el.classList.remove('edit');
     });
   }
   myTimer.updateState(minutes.value, seconds.value);
 });
 
-timeValues.forEach( el => {
-  el.addEventListener('input', (event)=> {
+timeValues.forEach((el) => {
+  el.addEventListener('input', (event) => {
     if (parseInt(el.value) < 10) {
       el.value = '0' + el.value;
     }
   });
-})
+});
