@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "Bebas Neue Book"; /* Имя шрифта */
-  src: url("./fonts/bebasneue-book-webfont.woff2") format("woff2"),
-       url("./fonts/bebasneue-book-webfont.woff") format("woff");
- }
+  font-family: 'Bebas Neue Book'; /* Имя шрифта */
+  src: url('./fonts/bebasneue-book-webfont.woff2') format('woff2'),
+    url('./fonts/bebasneue-book-webfont.woff') format('woff');
+}
 
 * {
   box-sizing: border-box;
@@ -11,12 +11,13 @@
 }
 
 :root {
-  --color-background: #2B2A30;
+  --color-background: #2b2a30;
   --color-red: #9d0000;
   --color-green: #00aa51;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -25,7 +26,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .timerContainer {
@@ -54,6 +54,15 @@ body {
   stroke-dashoffset: 0;
 }
 
+@-webkit-keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 1600px;
+  }
+}
+
 @keyframes countdown {
   from {
     stroke-dashoffset: 0px;
@@ -71,13 +80,17 @@ body {
   flex-direction: column;
   align-items: center;
   border-radius: 50%;
-  background: radial-gradient(71.4% 71.4% at 51.7% 28.6%, #3A393F 0%, #17171A 100%);
+  background: radial-gradient(
+    71.4% 71.4% at 51.7% 28.6%,
+    #3a393f 0%,
+    #17171a 100%
+  );
   box-shadow: inset 0px 0px 114px rgba(0, 0, 0, 0.45);
 }
 
 .time {
   display: flex;
-  font-family: "Bebas Neue Book", cursive;
+  font-family: 'Bebas Neue Book', cursive;
   font-style: normal;
   font-weight: normal;
   font-size: 196px;
@@ -88,7 +101,7 @@ body {
   margin-bottom: 30px;
 }
 
-input[type="number"] {
+input[type='number'] {
   width: 200px;
   border: 0;
   border-radius: 25%;
@@ -97,13 +110,13 @@ input[type="number"] {
   pointer-events: none;
 }
 
-input[type="number"]:not(edit):-webkit-outer-spin-button,
-input[type="number"]:not(edit)::-webkit-inner-spin-button {
+input[type='number']:not(edit):-webkit-outer-spin-button,
+input[type='number']:not(edit):-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"].edit {
+input[type='number'].edit {
   pointer-events: all;
   background-color: #aaaaaa;
 }
